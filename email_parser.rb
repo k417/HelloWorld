@@ -1,16 +1,14 @@
 #This is file will parse the random_text.txt for emails address domains and output them
 #The email address domains will be stored in a Hash to keep track of the frequency of each domain match
 
-email_pattern = /\w\@(\w*.\w*)/
-email_matches = File.read("random_text.txt").scan(email_pattern)
+domain_name_pattern = /\w\@(\w*.\w*)/
+domain_name_matches = File.read("random_text.txt").scan(domain_name_pattern)
 
-#puts email_matches
+frequency_hash = Hash.new(0)
 
-word_frequency = Hash.new(0)
-
-email_matches.each do |email|
-  word_frequency[email] += 1
+domain_name_matches.each do |domain|
+  frequency_hash[domain] += 1
 end
 
-word_frequency.sort
-word_frequency.each { |domain, freq| puts "#{domain[0]} occurs #{freq} times"}
+frequency_hash.sort
+frequency_hash.each { |domain, freq| puts "#{domain[0]} occurs #{freq} times"}
