@@ -11,4 +11,4 @@ domain_name_matches.each do |domain|
 end
 
 frequency_hash.sort
-frequency_hash.each { |domain, freq| puts "#{domain[0]} occurs #{freq} times"}
+frequency_hash.each { |domain, freq| puts "#{domain[0].rjust(13)}: #{freq} time(s)"}
