@@ -8,6 +8,7 @@
 
 vowel_pattern = /[aeiouy]/ #sometimes...or...always... y...
 consonant_pattern = /[bcdfghjklmnpqrstvwx]/ #...never y...
+alphabet_pattern =/[abcdefghijklmnopqrstuvwxyz]/
 
 ##input variables
 surname = ""
@@ -16,7 +17,7 @@ user_has_more_names = true
 
 ##processing
 print "What will be the baby's last name? "
-surname = STDIN.gets.chomp
+surname = STDIN.gets.chomp.capitalize
 
 # def get_vowel_pattern(name)
 #   pattern = /[aeiouy]/ #sometimes...or...always... y...
@@ -42,6 +43,7 @@ end
 
 surname_vowel_pattern = build_subpattern(surname, vowel_pattern)
 surname_consonant_pattern = build_subpattern(surname, consonant_pattern)
+surname_alphabet_pattern = build_subpattern(surname, alphabet_pattern)
 
 # dont feel like dealing with this right now so commenting it out
 while name_idea_list.length < 2
@@ -67,7 +69,18 @@ def create_sorted_frequency_hash(list, pattern)
 end
 
 puts name_vowel_frequency = create_sorted_frequency_hash(name_idea_list, surname_vowel_pattern)
-#name_vowel_frequency.each { |name,freq| puts "#{name} #{surname} (: #{freq})" }
 puts name_consonant_frequency = create_sorted_frequency_hash(name_idea_list, surname_consonant_pattern)
+puts name_alphabet_frequency = create_sorted_frequency_hash(name_idea_list, surname_alphabet_pattern)
+
+name_alphabet_frequency.each { |first, count1|
+  name_alphabet_frequency.each { |middle, count2|
+    unless first.eql? middle then puts "#{first} #{middle} #{surname}" end
+  }
+}
+
+#just print all the possibilities
+# name_idea_list.permutation(2).to_a.each { |combination| puts "#{combination[0]} #{combination[1]} #{surname}"}
+
+
 #maybe remove any results that have 0 frequency?
-#some how combine lists or whatever
+#some how combine lists or whatever (this is the full alphabet....duh)
