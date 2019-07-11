@@ -19,18 +19,6 @@ user_has_more_names = true
 print "What will be the baby's last name? "
 surname = STDIN.gets.chomp.capitalize
 
-# def get_vowel_pattern(name)
-#   pattern = /[aeiouy]/ #sometimes...or...always... y...
-#   name_vowel_string = ""
-#   vowels_from_name = name.downcase.scan(pattern).sort
-#   ##puts vowels_from_name
-#   vowels_from_name.each do |vowel|
-#     name_vowel_string += vowel
-#   end
-#   name_vowel_string.squeeze! #remove duplicate letters (maybe later utilize reoccurance as favorable)
-#   /[#{name_vowel_string}]/
-# end
-
 def build_subpattern(name, pattern)
   subpattern_string = ""
   letters_from_name = name.downcase.scan(pattern).sort
@@ -68,15 +56,34 @@ def create_sorted_frequency_hash(list, pattern)
   frequency_hash = frequency_hash.sort_by {|_key, value| value}.reverse.to_h #sort by the frequency of vowels occuring...
 end
 
-puts name_vowel_frequency = create_sorted_frequency_hash(name_idea_list, surname_vowel_pattern)
-puts name_consonant_frequency = create_sorted_frequency_hash(name_idea_list, surname_consonant_pattern)
+#puts name_vowel_frequency = create_sorted_frequency_hash(name_idea_list, surname_vowel_pattern)
+#puts name_consonant_frequency = create_sorted_frequency_hash(name_idea_list, surname_consonant_pattern)
 puts name_alphabet_frequency = create_sorted_frequency_hash(name_idea_list, surname_alphabet_pattern)
 
-name_alphabet_frequency.each { |first, count1|
-  name_alphabet_frequency.each { |middle, count2|
-    unless first.eql? middle then puts "#{first} #{middle} #{surname}" end
+
+
+def get_name_combinations(frequency_hash)
+  combinations = []
+  frequency_hash.each { |first, ffreq|
+    frequency_hash.each { |middle, mfreq|
+      unless first.eql? middle then combinations.push("#{first} #{middle}") end
+    }
   }
+  combinations
+end
+
+def initials_are_bad(initials)
+  if initials.eql? "ASS" then true else false end
+end
+
+
+get_name_combinations(name_alphabet_frequency).each { |combo|
+  full_name ="#{combo} #{surname}"
+  initials = full_name.split.map(&:chr).join
+  unless initials_are_bad(initials) then puts full_name else puts "#{initials} is a risky initial combination..." end
 }
+
+
 
 #just print all the possibilities
 # name_idea_list.permutation(2).to_a.each { |combination| puts "#{combination[0]} #{combination[1]} #{surname}"}
