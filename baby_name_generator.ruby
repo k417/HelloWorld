@@ -10,6 +10,14 @@ vowel_pattern = /[aeiouy]/ #sometimes...or...always... y...
 consonant_pattern = /[bcdfghjklmnpqrstvwx]/ #...never y...
 alphabet_pattern =/[abcdefghijklmnopqrstuvwxyz]/
 
+@bad_initials = []
+
+File.open("bad_initials.txt", "r") do |f|
+  f.each_line do |line|
+    @bad_initials += line.split
+  end
+end
+
 ##input variables
 surname = ""
 name_idea_list = []
@@ -73,14 +81,14 @@ def get_name_combinations(frequency_hash)
 end
 
 def initials_are_bad(initials)
-  if initials.eql? "ASS" then true else false end
+  if @bad_initials.include? initials then true else false end
 end
 
 
 get_name_combinations(name_alphabet_frequency).each { |combo|
   full_name ="#{combo} #{surname}"
   initials = full_name.split.map(&:chr).join
-  unless initials_are_bad(initials) then puts full_name else puts "#{initials} is a risky initial combination..." end
+  unless initials_are_bad(initials) then puts full_name else puts "#{initials} is a risky initial combination for the name #{full_name}" end
 }
 
 
