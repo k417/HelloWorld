@@ -1,15 +1,18 @@
 file = "bad_initials.txt"
-@initial_list = []
+@initials_list = []
 
+#get the list from the file and store in an array
 File.readlines(file).each do |line|
-  @initial_list += line.split
+  @initials_list += line.split
 end
 
-File.delete(file) if File.exist?(file)
+#list clean up
+@initials_list.sort! #sort alphabetically
+@initials_list.uniq! #remove duplicate entries
 
-@initial_list.sort! #sort alphabetically
-@initial_list = @initial_list & @initial_list #remove duplicates
+File.delete(file) if File.exist?(file) #remove the file before inserting new cleaned up list
 
+#insert new cleaned up list (creates new file)
 File.open(file, "w+") do |f|
-  @initial_list.each { |init| f.puts(init) }
+  @initials_list.each { |init| f.puts(init) }
 end

@@ -1,5 +1,6 @@
 #name combination criteria: (for future iterations)
-#name endings (y, ie)
+#name end s with certain sounds/letters (y, ie)
+#name starts with ...
 #syllables
 #middle names maybe 1,2,3 syllables
 #alliteration
