@@ -6,22 +6,19 @@
 #alliteration
 #consonant matching with vowel matching
 
-vowel_pattern = /[aeiouy]/ #sometimes...or...always... y...
-consonant_pattern = /[bcdfghjklmnpqrstvwx]/ #...never y...
-alphabet_pattern =/[abcdefghijklmnopqrstuvwxyz]/
-
-@bad_initials = []
-
-File.open("bad_initials.txt", "r") do |f|
-  f.each_line do |line|
-    @bad_initials += line.split
-  end
-end
-
-##input variables
+##init some variables
 surname = ""
 name_idea_list = []
 user_has_more_names = true
+vowel_pattern = /[aeiouy]/ #sometimes...or...always... y...
+consonant_pattern = /[bcdfghjklmnpqrstvwx]/ #...never y...
+alphabet_pattern =/[abcdefghijklmnopqrstuvwxyz]/
+file = "bad_initials.txt"
+@bad_initials = []
+
+File.readlines(file).each do |line|
+  @bad_initials += line.split
+end
 
 ##processing
 print "What will be the baby's last name? "
@@ -81,21 +78,11 @@ def get_name_combinations(frequency_hash)
 end
 
 def initials_are_bad(initials)
-  if @bad_initials.include? initials then true else false end
+  @bad_initials.include? initials
 end
-
 
 get_name_combinations(name_alphabet_frequency).each { |combo|
   full_name ="#{combo} #{surname}"
   initials = full_name.split.map(&:chr).join
   unless initials_are_bad(initials) then puts full_name else puts "#{initials} is a risky initial combination for the name #{full_name}" end
 }
-
-
-
-#just print all the possibilities
-# name_idea_list.permutation(2).to_a.each { |combination| puts "#{combination[0]} #{combination[1]} #{surname}"}
-
-
-#maybe remove any results that have 0 frequency?
-#some how combine lists or whatever (this is the full alphabet....duh)
